@@ -28,7 +28,7 @@ plugin.renderers = {"Item": {}};
 
 plugin.renderers.Item.content = function(element) {
 	var item = this;
-	item.parentRenderer("content", element);
+	item.parentRenderer("content", arguments);
 	var conditions = plugin.config.get(item, "conditions");
 	if (!conditions || !conditions.length) return;
 	$.map(conditions, function(condition) {
