@@ -1,5 +1,9 @@
 Changelog
 
+2.1 (08/11/2011)
+
+ * Fixed: Prevented multiple date element wrapping into hyperlink when item relative date is updated after live update.
+
 2.0 (06/16/2011)
 
  * Initial plugin checkin

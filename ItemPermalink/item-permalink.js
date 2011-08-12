@@ -5,7 +5,7 @@
  *  permanent URL hyperlink. Permanent URL format can be configured through
  *  the plugin parameters.
  *
- *  Version: 2.0 (06/16/2011)
+ *  Version: 2.1 (08/11/2011)
  *  Developed by: Echo Solutions team (Kushnir Andrew)
  *  Documentation: http://wiki.aboutecho.com/Community-Developed-Plugins#ItemPermalink
  *
@@ -30,7 +30,7 @@ plugin.renderers.Item.date = function(element) {
 	var item = this;
 	item.parentRenderer("date", arguments);
 	var format = plugin.config.get(item, "format");
-	if (!format) return;
+	if (!format || plugin.get(item, "wrapped")) return;
 	var href = $.isFunction(format)
 		? format(item)
 		: format.replace(/\[ID\]/g, item.data.object.id);
@@ -38,6 +38,7 @@ plugin.renderers.Item.date = function(element) {
 		{"href": href, "skipEscaping": true},
 		{"openInNewWindow": plugin.config.get(item, "openInNewWindow", "", true)}
 	));
+	plugin.set(item, "wrapped", true);
 };
 	
 })(jQuery);

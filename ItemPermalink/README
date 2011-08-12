@@ -1,5 +1,5 @@
 The "ItemPermalink" Echo Stream client plugin converts static timestamp field into an item permanent URL hyperlink. Permanent URL format can be configured through the plugin parameters.
 
-Version: 2.0 (06/16/2011)
+Version: 2.1 (08/11/2011)
 Developed by: Echo Solutions team (Kushnir Andrew)
 Documentation: http://wiki.aboutecho.com/Community-Developed-Plugins#ItemPermalink
