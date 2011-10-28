@@ -1,5 +1,9 @@
 Changelog
 
+2.1 (10/28/2011)
+
+ * New parameter "caseInsensitive" was added to the plugin configuration to allow case insensitive values comparision
+
 2.0 (06/16/2011)
 
  * Initial plugin checkin

@@ -1,5 +1,5 @@
 This Echo Stream client plugin allows to assign extra CSS classes to the item container DOM element based on a certain criteria (like user id/role/state  or item state). It allows to apply specific look and feel for the item in the stream.
 
-Version: 2.0 (06/16/2011)
+Version: 2.1 (10/28/2011)
 Developed by: Echo Solutions team (Kushnir Andrew)
 Documentation: http://wiki.aboutecho.com/Community-Developed-Plugins#ItemConditionalCSSClasses
