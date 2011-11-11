@@ -44,6 +44,8 @@ var plugin = Echo.createPlugin({
 			plugin.renderers.Item.authorName);
 		plugin.extendRenderer("Item", "avatar",
 			plugin.renderers.Item.avatar);
+		plugin.extendRenderer("Item", "replyForm",
+			plugin.renderers.Item.replyForm);
 		$.map(["tweet", "retweet", "favorite"], function(action) {
 			plugin.extendRenderer("Item", action + "Intents",
 				plugin.renderers.Item.intent(action));
@@ -114,20 +116,27 @@ plugin.renderers.Item.twitterIntents = function(element) {
 
 plugin.renderers.Item.controls = function(element, dom) {
 	var item = this;
-	item.parentRenderer("controls", arguments);
-	if (!plugin.isTweet(item)) return;
-	// hide first controls delimiter
-	$(".echo-item-control-delim", element).first().hide();
-	// hide delimiter if no more controls is available
-	var hasControls = false;
-	$.map(item.controlsOrder, function(name) {
-		var data = item.controls[name];
-		if (data && data.visible()) {
-			hasControls = true;
-			return false; // break
-		}
+	var args = arguments;
+	if (!plugin.isTweet(item)) {
+		item.parentRenderer("controls", arguments);
+		return;
+	}
+	// exclude Reply and Like plugin UI for tweets
+	plugin.executeWhileInteractionDisabled(item, function() {
+		item.parentRenderer("controls", args);
+		// hide first controls delimiter
+		$(".echo-item-control-delim", element).first().hide();
+		// hide delimiter if no more controls is available
+		var hasControls = false;
+		$.map(item.controlsOrder, function(name) {
+			var data = item.controls[name];
+			if (data && data.visible()) {
+				hasControls = true;
+				return false; // break
+			}
+		});
+		if (!hasControls) dom.get("intentControlDelimiter").hide();
 	});
-	if (!hasControls) dom.get("intentControlDelimiter").hide();
 };
 
 plugin.renderers.Item.intent = function(action) {
@@ -198,6 +207,31 @@ plugin.renderers.Item.avatar = function(element) {
 		{"href": item.data.actor.id, "skipEscaping": true},
 		{"openInNewWindow": plugin.config.get(item, "openInNewWindow", "", true)}
 	)).append(avatar);
+};
+
+plugin.renderers.Item.replyForm = function(element) {
+	var item = this;
+	var args = arguments;
+	if (plugin.isTweet(item)) {
+		plugin.executeWhileInteractionDisabled(item, function() {
+			item.parentRenderer("replyForm", args);
+		});
+		return;
+	}
+	item.parentRenderer("replyForm", args);
+};
+
+plugin.executeWhileInteractionDisabled = function(item, func) {
+	var plugins = ["Reply", "Like"];
+	var states = {};
+	$.map(plugins, function(plugin) {
+		states[plugin] = item.config.get("plugins." + plugin + ".enabled");
+		item.config.set("plugins." + plugin + ".enabled", false);
+	});
+	func();
+	$.map(plugins, function(plugin) {
+		item.config.set("plugins." + plugin + ".enabled", states[plugin]);
+	});
 };
 
 plugin.isTweet = function(item) {
