@@ -1,5 +1,5 @@
 This Echo Stream client plugin allows to limit the amount of visible items in the stream when a live update reaches the client side. When new items are rendered, the old ones are removed from the visual part of the stream.
 
-Version: 2.0 (07/18/2011)
+Version: Version: 2.1 (11/14/2011)
 Developed by: Echo Solutions team (Kushnir Andrew)
 Documentation: http://wiki.aboutecho.com/Community-Developed-Plugins#StreamRootItemsLimiter

@@ -1,5 +1,10 @@
 Changelog
 
+2.1 (11/14/2011)
+
+ * Fixed race condition between receiving new items via live updates and items after "More" button click
+ * Improved the "nextPageAfter" timestamp calculation for the "More" button
+
 2.0 (07/18/2011)
 
  * Initial plugin checkin

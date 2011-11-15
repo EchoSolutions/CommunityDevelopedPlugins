@@ -5,7 +5,7 @@
  *  when a live update reaches the client side. When new items are rendered, the old ones
  *  are removed from the visual part of the stream.
  *
- *  Version: 2.0 (07/18/2011)
+ *  Version: 2.1 (11/14/2011)
  *  Developed by: Echo Solutions team (Kushnir Andrew)
  *  Documentation: http://wiki.aboutecho.com/Community-Developed-Plugins#StreamRootItemsLimiter
  *
@@ -23,9 +23,12 @@ var plugin = Echo.createPlugin({
 		application.subscribe("Stream.Item.onRender", function() {
 			var maxItemsCount = plugin.get(application, "maxItemsCount");
 			$.map(application.threads.slice(maxItemsCount), function(item) {
-				application.deleteItemSpotUpdate(item);
-				application.applyStructureUpdates("delete", item);
-				plugin.updateNextPageAfter(application);
+				if (!item.dom || !item.dom.content) return;
+				try {
+					application.deleteItemSpotUpdate(item);
+					application.applyStructureUpdates("delete", item);
+					plugin.updateNextPageAfter(application);
+				} catch(e) {}
 			});
 		});
 		application.subscribe("Stream.onRerender", function() {
@@ -54,10 +57,8 @@ plugin.setMaxItemsCount = function(application, increment) {
 };
 
 plugin.updateNextPageAfter = function(application) {
-	var pageAfter = application.threads[application.threads.length - 1];
-	var acc = application.getRespectiveAccumulator(pageAfter,
-					application.config.get("sortOrder"));
-	application.nextPageAfter = pageAfter.timestamp + (acc ? "|" + acc : "");
+	application.nextPageAfter =
+		application.threads[application.threads.length - 1].data.pageAfter;
 };
 
 })(jQuery);
