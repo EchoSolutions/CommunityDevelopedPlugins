@@ -57,8 +57,14 @@ plugin.setMaxItemsCount = function(application, increment) {
 };
 
 plugin.updateNextPageAfter = function(application) {
-	application.nextPageAfter =
-		application.threads[application.threads.length - 1].data.pageAfter;
+	var lastItem = application.threads[application.threads.length - 1];
+	if (lastItem.data.pageAfter) {
+		application.nextPageAfter = lastItem.data.pageAfter
+	} else {
+		var acc = application.getRespectiveAccumulator(lastItem,
+				application.config.get("sortOrder"));
+		application.nextPageAfter = lastItem.timestamp + (acc ? "|" + acc : "");
+	}
 };
 
 })(jQuery);
