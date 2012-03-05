@@ -1,0 +1,5 @@
+This Echo Stream plugin allows to define different sanitization rules for item content based on a certain criteria (like user id/role/state or item state).
+
+Version: 2.0 (03/04/2012)
+Developed by: Echo Solutions team
+Documentation: http://wiki.aboutecho.com/Echo%20Application%20-%20Echo%20Stream%20Client#ItemSanitization
