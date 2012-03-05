@@ -1,8 +1,0 @@
-The "TwitterIntents" Echo Stream client plugin plugin adds the Twitter intents controls into the item UI and updates the item UI to look like a Twitter item. The item UI update includes:
-
- - by clicking on the avatar or the user name - the user account on Twitter will be opened
- - the item timestamp transforms from a static field to a permanent item link on Twitter
-
-Version: 2.1 (11/11/2011)
-Developed by: Echo Solutions team
-Documentation: http://wiki.aboutecho.com/Echo%20Application%20-%20Echo%20Stream%20Client#TwitterIntents
